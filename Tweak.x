@@ -4,8 +4,24 @@ static void ShowWelcomeMessage(void) {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)),
                    dispatch_get_main_queue(), ^{
 
-        UIWindow *window = UIApplication.sharedApplication.windows.firstObject;
-        if (!window) return;
+        UIWindow *window = nil;
+
+        if (@available(iOS 15.0, *)) {
+            for (UIScene *scene in UIApplication.sharedApplication.connectedScenes) {
+                if ([scene isKindOfClass:[UIWindowScene class]]) {
+                    UIWindowScene *windowScene = (UIWindowScene *)scene;
+                    window = windowScene.windows.firstObject;
+                    if (window) break;
+                }
+            }
+        } else {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+            window = UIApplication.sharedApplication.windows.firstObject;
+#pragma clang diagnostic pop
+        }
+
+        if (!window || !window.rootViewController) return;
 
         UIAlertController *alert =
         [UIAlertController alertControllerWithTitle:@"👋 Welcome"
