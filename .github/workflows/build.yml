@@ -1,1 +1,35 @@
+name: Build Theos
 
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install packages
+        run: |
+          sudo apt update
+          sudo apt install -y make clang git zip unzip
+
+      - name: Clone Theos
+        run: |
+          git clone --recursive https://github.com/theos/theos.git $HOME/theos
+
+      - name: Build
+        run: |
+          export THEOS=$HOME/theos
+          make package
+
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: Packages
+          path: packages/*
