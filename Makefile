@@ -10,5 +10,6 @@ TWEAK_NAME = WelcomeTweak
 
 WelcomeTweak_FILES = Tweak.x
 WelcomeTweak_CFLAGS = -fobjc-arc
+WelcomeTweak_PLIST = WelcomeTweak.plist
 
 include $(THEOS_MAKE_PATH)/tweak.mk
