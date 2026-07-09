@@ -10,6 +10,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      THEOS: ${{ github.workspace }}/theos
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -17,18 +20,26 @@ jobs:
       - name: Install packages
         run: |
           sudo apt update
-          sudo apt install -y make clang git zip unzip
+          sudo apt install -y make clang git zip unzip curl
 
       - name: Clone Theos
         run: |
-          git clone --recursive https://github.com/theos/theos.git $HOME/theos
+          git clone --recursive https://github.com/theos/theos.git $THEOS
+
+      - name: Download SDK
+        run: |
+          mkdir -p $THEOS/sdks
+          curl -L https://github.com/theos/sdks/archive/master.zip -o sdk.zip
+          unzip sdk.zip
+          cp -R sdks-master/*.sdk $THEOS/sdks/
+          ls -la $THEOS/sdks
 
       - name: Build
         run: |
-          export THEOS=$HOME/theos
+          export THEOS=$THEOS
           make package
 
-      - name: Upload
+      - name: Upload Packages
         uses: actions/upload-artifact@v4
         with:
           name: Packages
