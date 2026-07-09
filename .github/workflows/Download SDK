@@ -1,0 +1,12 @@
+- name: Clone Theos
+  run: |
+    git clone --recursive https://github.com/theos/theos.git $HOME/theos
+
+- name: Download SDK
+  run: |
+    git clone https://github.com/theos/sdks.git $HOME/theos/sdks
+
+- name: Build
+  run: |
+    export THEOS=$HOME/theos
+    make package
