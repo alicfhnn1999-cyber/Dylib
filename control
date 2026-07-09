@@ -1,9 +1,9 @@
-Package: com.example.welcometweak
+Package: com.yourcompany.welcometweak
 Name: WelcomeTweak
-Version: 1.0.0
-Architecture: iphoneos-arm64
-Description: Simple welcome tweak
-Maintainer: Your Name
-Author: Your Name
+Version: 1.0
+Architecture: iphoneos-arm
+Description: Welcome message tweak
+Maintainer: Ali
+Author: Ali
 Section: Tweaks
 Depends: mobilesubstrate
