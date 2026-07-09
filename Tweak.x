@@ -21,7 +21,8 @@ static void ShowWelcomeMessage(void) {
 #pragma clang diagnostic pop
         }
 
-        if (!window || !window.rootViewController) return;
+        if (!window || !window.rootViewController)
+            return;
 
         UIAlertController *alert =
         [UIAlertController alertControllerWithTitle:@"👋 Welcome"
